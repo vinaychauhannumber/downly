@@ -2,11 +2,12 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Download, Menu, X } from 'lucide-react';
+import { Download, Menu, X, ChevronDown, BookOpen } from 'lucide-react';
 import { GitHubIcon } from './icons';
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 glass-panel">
@@ -25,44 +26,99 @@ export function Header() {
                   Downly
                 </span>
                 <span className="text-[10px] uppercase font-semibold tracking-wider px-1.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                  v2.4 Pro
+                  Fast HD
                 </span>
               </div>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            <a
-              href="#downloader"
+          <nav className="hidden md:flex items-center gap-6">
+            <Link
+              href="/"
               className="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors"
             >
               Downloader
-            </a>
-            <a
-              href="#platforms"
+            </Link>
+
+            {/* Tools Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setToolsDropdownOpen(true)}
+              onMouseLeave={() => setToolsDropdownOpen(false)}
+            >
+              <button
+                type="button"
+                className="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors flex items-center gap-1 py-2"
+              >
+                <span>Tools</span>
+                <ChevronDown className="w-3.5 h-3.5" />
+              </button>
+
+              {toolsDropdownOpen && (
+                <div className="absolute top-full left-0 w-64 p-3 rounded-2xl bg-[#0e121d] border border-white/10 shadow-2xl space-y-1 animate-fadeIn">
+                  <Link
+                    href="/instagram-reel-downloader"
+                    className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-cyan-300 hover:bg-white/5 transition-colors"
+                  >
+                    Instagram Reel Downloader
+                  </Link>
+                  <Link
+                    href="/youtube-video-downloader"
+                    className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-cyan-300 hover:bg-white/5 transition-colors"
+                  >
+                    YouTube Video Downloader
+                  </Link>
+                  <Link
+                    href="/youtube-mp3-downloader"
+                    className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-cyan-300 hover:bg-white/5 transition-colors"
+                  >
+                    YouTube to MP3 (320kbps)
+                  </Link>
+                  <Link
+                    href="/youtube-shorts-downloader"
+                    className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-cyan-300 hover:bg-white/5 transition-colors"
+                  >
+                    YouTube Shorts Downloader
+                  </Link>
+                  <Link
+                    href="/youtube-1080p-downloader"
+                    className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-cyan-300 hover:bg-white/5 transition-colors"
+                  >
+                    YouTube 1080p Downloader
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            <Link
+              href="/instagram-reel-downloader"
               className="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors"
             >
-              Platforms
-            </a>
-            <a
-              href="#how-it-works"
+              Instagram
+            </Link>
+
+            <Link
+              href="/youtube-video-downloader"
               className="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors"
             >
-              How It Works
-            </a>
-            <a
-              href="#features"
+              YouTube
+            </Link>
+
+            <Link
+              href="/youtube-mp3-downloader"
               className="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors"
             >
-              Features
-            </a>
-            <a
-              href="#faq"
-              className="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors"
+              MP3 Audio
+            </Link>
+
+            <Link
+              href="/guides"
+              className="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors flex items-center gap-1.5"
             >
-              FAQ
-            </a>
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Guides</span>
+            </Link>
           </nav>
 
           {/* Right Action & Status */}
@@ -73,7 +129,7 @@ export function Header() {
             </div>
 
             <a
-              href="https://github.com"
+              href="https://github.com/vinaychauhannumber/downly"
               target="_blank"
               rel="noreferrer"
               className="flex items-center justify-center w-9 h-9 rounded-lg border border-white/10 bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all"
@@ -101,48 +157,52 @@ export function Header() {
         <div className="md:hidden border-t border-white/10 bg-[#0d0f18]/95 backdrop-blur-xl px-4 pt-3 pb-6 space-y-3">
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium mb-2">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span>FFmpeg Media Engine Online</span>
+            <span>Media Engine Online</span>
           </div>
 
-          <a
-            href="#downloader"
+          <Link
+            href="/"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg text-base font-medium text-slate-200 hover:bg-white/5 hover:text-cyan-400"
           >
             Downloader
-          </a>
-          <a
-            href="#platforms"
+          </Link>
+
+          <Link
+            href="/instagram-reel-downloader"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg text-base font-medium text-slate-200 hover:bg-white/5 hover:text-cyan-400"
           >
-            Supported Platforms
-          </a>
-          <a
-            href="#how-it-works"
+            Instagram Reel Downloader
+          </Link>
+
+          <Link
+            href="/youtube-video-downloader"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg text-base font-medium text-slate-200 hover:bg-white/5 hover:text-cyan-400"
           >
-            How It Works
-          </a>
-          <a
-            href="#features"
+            YouTube Video Downloader
+          </Link>
+
+          <Link
+            href="/youtube-mp3-downloader"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg text-base font-medium text-slate-200 hover:bg-white/5 hover:text-cyan-400"
           >
-            Features
-          </a>
-          <a
-            href="#faq"
+            YouTube to MP3 Converter
+          </Link>
+
+          <Link
+            href="/guides"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg text-base font-medium text-slate-200 hover:bg-white/5 hover:text-cyan-400"
           >
-            FAQ
-          </a>
+            Guides & Tutorials
+          </Link>
 
           <div className="pt-2 border-t border-white/10">
             <a
-              href="https://github.com"
+              href="https://github.com/vinaychauhannumber/downly"
               target="_blank"
               rel="noreferrer"
               className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg border border-white/10 bg-white/5 text-slate-300 text-sm font-medium"
