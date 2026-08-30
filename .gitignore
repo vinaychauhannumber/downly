@@ -40,5 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# temporary media downloads
+# temporary media downloads & binaries
 .tmp_downloads/
+bin/
+

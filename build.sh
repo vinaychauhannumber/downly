@@ -1,27 +1,31 @@
 #!/usr/bin/env bash
-# Render build script — installs yt-dlp and ffmpeg before Next.js build
+# Render build script — installs yt-dlp to project directory before Next.js build
 set -e
 
-echo "==> Installing system dependencies..."
+echo "==> Setting up local project binaries..."
 
-# Install ffmpeg
-if ! command -v ffmpeg &> /dev/null; then
-  apt-get update -qq && apt-get install -y -qq ffmpeg
-fi
-echo "FFmpeg: $(ffmpeg -version 2>&1 | head -1)"
-
-# Install yt-dlp latest binary
-if ! command -v yt-dlp &> /dev/null; then
-  curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp \
-    -o /usr/local/bin/yt-dlp
-  chmod a+rx /usr/local/bin/yt-dlp
-fi
-echo "yt-dlp: $(yt-dlp --version)"
-
-# Create temp directory
+# Create project-local bin directory
+mkdir -p bin
 mkdir -p .tmp_downloads
 
-echo "==> Building Next.js..."
+# Download yt-dlp standalone binary into local bin folder
+echo "==> Downloading yt-dlp binary..."
+curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o ./bin/yt-dlp
+chmod +x ./bin/yt-dlp
+
+# Verify yt-dlp
+export PATH="$(pwd)/bin:$PATH"
+echo "yt-dlp version: $(./bin/yt-dlp --version)"
+
+# Check FFmpeg (available in Render or via @ffmpeg-installer npm package)
+if command -v ffmpeg &> /dev/null; then
+  echo "System FFmpeg: $(ffmpeg -version 2>&1 | head -n 1)"
+else
+  echo "Using bundled FFmpeg from npm packages"
+fi
+
+echo "==> Installing npm dependencies & building Next.js..."
 npm install
 npm run build
-echo "==> Build complete!"
+
+echo "==> Build completed successfully!"

@@ -37,9 +37,10 @@ function locateYtDlp(): string {
   // Allow explicit override via environment variable (useful for Render/Railway)
   if (process.env.YTDLP_PATH) return process.env.YTDLP_PATH;
   const candidates = [
-    '/usr/local/bin/yt-dlp',            // Render custom install (build.sh)
-    '/usr/bin/yt-dlp',                  // Render system
-    '/opt/homebrew/bin/yt-dlp',         // macOS Homebrew
+    path.join(process.cwd(), 'bin/yt-dlp'), // Render project bin (build.sh)
+    '/usr/local/bin/yt-dlp',
+    '/usr/bin/yt-dlp',
+    '/opt/homebrew/bin/yt-dlp',
     path.join(process.env.HOME || '', '.local/bin/yt-dlp'),
   ];
   for (const p of candidates) {
