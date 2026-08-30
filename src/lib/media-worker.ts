@@ -16,15 +16,16 @@ if (!fs.existsSync(TEMP_DIR)) {
 }
 
 function locateFFmpeg(): string {
+  // Allow explicit override via environment variable (useful for Render/Railway)
+  if (process.env.FFMPEG_PATH) return process.env.FFMPEG_PATH;
   const candidates = [
+    '/usr/bin/ffmpeg',                  // Render / Ubuntu Linux
+    '/usr/local/bin/ffmpeg',            // Render custom install
+    '/opt/homebrew/bin/ffmpeg',         // macOS Homebrew
     path.join(process.cwd(), 'node_modules/@ffmpeg-installer/darwin-arm64/ffmpeg'),
     path.join(process.cwd(), 'node_modules/@ffmpeg-installer/darwin-x64/ffmpeg'),
     path.join(process.cwd(), 'node_modules/@ffmpeg-installer/linux-x64/ffmpeg'),
     path.join(process.cwd(), 'node_modules/@ffmpeg-installer/linux-arm64/ffmpeg'),
-    path.join(process.cwd(), 'node_modules/@ffmpeg-installer/win32-x64/ffmpeg.exe'),
-    '/opt/homebrew/bin/ffmpeg',
-    '/usr/local/bin/ffmpeg',
-    '/usr/bin/ffmpeg',
   ];
   for (const p of candidates) {
     try { if (fs.existsSync(p)) return p; } catch { /* skip */ }
@@ -33,11 +34,12 @@ function locateFFmpeg(): string {
 }
 
 function locateYtDlp(): string {
+  // Allow explicit override via environment variable (useful for Render/Railway)
+  if (process.env.YTDLP_PATH) return process.env.YTDLP_PATH;
   const candidates = [
-    '/opt/homebrew/bin/yt-dlp',
-    '/usr/local/bin/yt-dlp',
-    '/usr/bin/yt-dlp',
-    '/Users/vinaychauhan/.local/bin/yt-dlp',
+    '/usr/local/bin/yt-dlp',            // Render custom install (build.sh)
+    '/usr/bin/yt-dlp',                  // Render system
+    '/opt/homebrew/bin/yt-dlp',         // macOS Homebrew
     path.join(process.env.HOME || '', '.local/bin/yt-dlp'),
   ];
   for (const p of candidates) {
