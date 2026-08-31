@@ -33,6 +33,9 @@ export const metadata: Metadata = {
   authors: [{ name: 'Downly Media Team' }],
   creator: 'Downly',
   publisher: 'Downly',
+  verification: {
+    google: 'NRgD68lehG4lWClUSrEkuVhLb4PIMPGbgfQNjRG_tDA',
+  },
   robots: {
     index: true,
     follow: true,
@@ -112,6 +115,10 @@ export default function RootLayout({
     >
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <meta
+          name="google-site-verification"
+          content="NRgD68lehG4lWClUSrEkuVhLb4PIMPGbgfQNjRG_tDA"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
