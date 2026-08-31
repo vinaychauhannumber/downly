@@ -18,6 +18,7 @@ import { Features } from '@/components/Features';
 import { FAQ } from '@/components/FAQ';
 import { Footer } from '@/components/Footer';
 import { StructuredData } from '@/components/StructuredData';
+import { AdBanner } from '@/components/AdBanner';
 import { SEO_TOOLS } from '@/lib/seo-data';
 import { GUIDES_DATA } from '@/lib/guides-data';
 import { Download, AlertTriangle, ArrowRight, Sparkles, BookOpen } from 'lucide-react';
@@ -83,6 +84,9 @@ export default function HomePage() {
       <main className="flex-1">
         {/* Hero Section with primary H1 */}
         <Hero />
+
+        {/* Top Ad Unit */}
+        <AdBanner slot="1000000001" label="Sponsored" />
 
         {/* URL Input Bar */}
         <UrlInput
@@ -173,6 +177,9 @@ export default function HomePage() {
 
         {/* Supported Platforms Section */}
         <PlatformCards />
+
+        {/* Mid-Page Ad Unit */}
+        <AdBanner slot="1000000002" label="Advertisement" />
 
         {/* Dedicated High-Intent Downloader Tools Grid */}
         <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-white/5">

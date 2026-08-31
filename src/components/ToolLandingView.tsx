@@ -14,6 +14,7 @@ import { DownloadResult } from '@/components/DownloadResult';
 import { DownloadHistory } from '@/components/DownloadHistory';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { StructuredData } from '@/components/StructuredData';
+import { AdBanner } from '@/components/AdBanner';
 import { Footer } from '@/components/Footer';
 import {
   Download,
@@ -125,6 +126,9 @@ export function ToolLandingView({ tool }: ToolLandingViewProps) {
             </p>
           </div>
         </section>
+
+        {/* Top Ad Unit */}
+        <AdBanner slot="1000000003" label="Sponsored" />
 
         {/* Downloader Section */}
         <UrlInput

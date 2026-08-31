@@ -7,6 +7,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { StructuredData } from '@/components/StructuredData';
+import { AdBanner } from '@/components/AdBanner';
 import {
   Clock,
   Calendar,
@@ -162,6 +163,9 @@ export default async function GuideArticlePage({ params }: GuidePageProps) {
               </div>
             )}
           </header>
+
+          {/* Top In-Article Ad Unit */}
+          <AdBanner slot="1000000004" label="Advertisement" />
 
           {/* Body Sections */}
           <div className="space-y-10 text-slate-300 text-sm sm:text-base leading-relaxed">
