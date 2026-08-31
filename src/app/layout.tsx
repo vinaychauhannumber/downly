@@ -13,7 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://downly.media'),
+  metadataBase: new URL(
+    process.env.RENDER_EXTERNAL_URL ||
+    process.env.NEXT_PUBLIC_APP_URL ||
+    'https://downlyfree.onrender.com'
+  ),
   title: {
     default: 'Downly – Free Instagram Reel & YouTube Video Downloader',
     template: '%s | Downly',

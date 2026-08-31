@@ -2,8 +2,18 @@ import { MetadataRoute } from 'next';
 import { SEO_TOOLS } from '@/lib/seo-data';
 import { GUIDES_DATA } from '@/lib/guides-data';
 
+function getBaseUrl(): string {
+  if (process.env.RENDER_EXTERNAL_URL) {
+    return process.env.RENDER_EXTERNAL_URL.replace(/\/$/, '');
+  }
+  if (process.env.NEXT_PUBLIC_APP_URL) {
+    return process.env.NEXT_PUBLIC_APP_URL.replace(/\/$/, '');
+  }
+  return 'https://downlyfree.onrender.com';
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://downly.media';
+  const baseUrl = getBaseUrl();
 
   const routes: MetadataRoute.Sitemap = [
     {
