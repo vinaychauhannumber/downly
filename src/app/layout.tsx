@@ -123,13 +123,15 @@ export default function RootLayout({
           name="google-site-verification"
           content="NRgD68lehG4lWClUSrEkuVhLb4PIMPGbgfQNjRG_tDA"
         />
-        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID && (
-          <script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID}`}
-            crossOrigin="anonymous"
-          />
-        )}
+        <meta
+          name="google-adsense-account"
+          content="ca-pub-9656841908386656"
+        />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9656841908386656"
+          crossOrigin="anonymous"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}

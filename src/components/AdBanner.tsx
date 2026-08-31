@@ -24,7 +24,8 @@ export function AdBanner({
   label = 'Advertisement',
 }: AdBannerProps) {
   const adRef = useRef<HTMLDivElement>(null);
-  const adClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+  const adClient =
+    process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || 'ca-pub-9656841908386656';
 
   useEffect(() => {
     if (!adClient) return;
