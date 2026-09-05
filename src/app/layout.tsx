@@ -13,11 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.RENDER_EXTERNAL_URL ||
-    process.env.NEXT_PUBLIC_APP_URL ||
-    'https://downlyfree.onrender.com'
-  ),
+  // Always use the canonical production domain — never the Render internal URL.
+  metadataBase: new URL('https://downlyfree.onrender.com'),
   title: {
     default: 'Downly – Free Instagram Reel & YouTube Video Downloader',
     template: '%s | Downly',
@@ -52,22 +49,22 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://downly.media',
+    canonical: 'https://downlyfree.onrender.com',
   },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://downly.media',
+    url: 'https://downlyfree.onrender.com',
     title: 'Downly – Free Instagram Reel & YouTube Video Downloader',
     description:
       'Download public Instagram Reels and YouTube videos in 1080p Full HD MP4 or 320kbps MP3 audio.',
     siteName: 'Downly',
     images: [
       {
-        url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80',
+        url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Downly Media Downloader',
+        alt: 'Downly – Free YouTube Video & Instagram Reels Downloader',
       },
     ],
   },
@@ -92,12 +89,12 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'Downly',
-    url: 'https://downly.media',
+    url: 'https://downlyfree.onrender.com',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: 'https://downly.media/?url={search_term_string}',
+        urlTemplate: 'https://downlyfree.onrender.com/?url={search_term_string}',
       },
       'query-input': 'required name=search_term_string',
     },
@@ -107,8 +104,8 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Downly',
-    url: 'https://downly.media',
-    logo: 'https://downly.media/favicon.svg',
+    url: 'https://downlyfree.onrender.com',
+    logo: 'https://downlyfree.onrender.com/favicon.svg',
     sameAs: [],
   };
 

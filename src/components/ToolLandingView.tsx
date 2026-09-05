@@ -83,8 +83,8 @@ export function ToolLandingView({ tool }: ToolLandingViewProps) {
   };
 
   const breadcrumbs = [
-    { name: 'Tools', url: '/#platforms' },
-    { name: tool.h1, url: `/${tool.slug}` },
+    { name: 'Home', url: 'https://downlyfree.onrender.com' },
+    { name: tool.h1, url: `https://downlyfree.onrender.com/${tool.slug}` },
   ];
 
   return (
@@ -93,7 +93,7 @@ export function ToolLandingView({ tool }: ToolLandingViewProps) {
       <StructuredData
         appName={`Downly – ${tool.h1}`}
         appDescription={tool.metaDescription}
-        appUrl={`https://downly.media/${tool.slug}`}
+        appUrl={`https://downlyfree.onrender.com/${tool.slug}`}
         breadcrumbs={breadcrumbs}
         faqItems={tool.faqs}
       />

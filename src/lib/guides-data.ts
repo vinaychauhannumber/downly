@@ -54,7 +54,7 @@ export const GUIDES_DATA: Record<string, GuideData> = {
           'Saving Instagram Reels to an iPhone camera roll is straightforward when using Safari:',
           '1. Open the Instagram app and find the Reel you want to save.',
           '2. Tap the "Share" paper airplane icon and tap "Copy Link".',
-          '3. Open Safari and navigate to Downly (downly.media/instagram-reel-downloader).',
+          '3. Open Safari and navigate to Downly (downlyfree.onrender.com/instagram-reel-downloader).',
           '4. Paste the link and tap "Analyze".',
           '5. Tap "Download File" and select "Download" in the Safari prompt.',
           '6. Open the Files app or tap the Downloads arrow in Safari to save the video directly to your Photos library.',

@@ -1,18 +1,10 @@
 import { MetadataRoute } from 'next';
 
-function getBaseUrl(): string {
-  if (process.env.RENDER_EXTERNAL_URL) {
-    return process.env.RENDER_EXTERNAL_URL.replace(/\/$/, '');
-  }
-  if (process.env.NEXT_PUBLIC_APP_URL) {
-    return process.env.NEXT_PUBLIC_APP_URL.replace(/\/$/, '');
-  }
-  return 'https://downlyfree.onrender.com';
-}
+// Production domain hardcoded — same reason as sitemap.ts.
+// Prevents env var fallback to downlyfree.onrender.com.
+const BASE_URL = 'https://downlyfree.onrender.com';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = getBaseUrl();
-
   return {
     rules: [
       {
@@ -25,7 +17,7 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl,
+    sitemap: `${BASE_URL}/sitemap.xml`,
+    host: BASE_URL,
   };
 }

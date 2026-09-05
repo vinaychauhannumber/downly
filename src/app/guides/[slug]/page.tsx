@@ -41,7 +41,7 @@ export async function generateMetadata({
     };
   }
 
-  const canonicalUrl = `https://downly.media/guides/${guide.slug}`;
+  const canonicalUrl = `https://downlyfree.onrender.com/guides/${guide.slug}`;
 
   return {
     title: `${guide.title} | Downly Guide`,
@@ -88,14 +88,14 @@ export default async function GuideArticlePage({ params }: GuidePageProps) {
       <StructuredData
         appName={`Downly – ${guide.h1}`}
         appDescription={guide.metaDescription}
-        appUrl={`https://downly.media/guides/${guide.slug}`}
+        appUrl={`https://downlyfree.onrender.com/guides/${guide.slug}`}
         breadcrumbs={breadcrumbs}
         faqItems={guide.faqs}
         article={{
           headline: guide.h1,
           description: guide.metaDescription,
           datePublished: guide.publishedDate,
-          url: `https://downly.media/guides/${guide.slug}`,
+          url: `https://downlyfree.onrender.com/guides/${guide.slug}`,
         }}
         howTo={
           guide.steps && guide.steps.length > 0

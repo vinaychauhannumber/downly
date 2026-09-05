@@ -2,49 +2,47 @@ import { MetadataRoute } from 'next';
 import { SEO_TOOLS } from '@/lib/seo-data';
 import { GUIDES_DATA } from '@/lib/guides-data';
 
-function getBaseUrl(): string {
-  if (process.env.RENDER_EXTERNAL_URL) {
-    return process.env.RENDER_EXTERNAL_URL.replace(/\/$/, '');
-  }
-  if (process.env.NEXT_PUBLIC_APP_URL) {
-    return process.env.NEXT_PUBLIC_APP_URL.replace(/\/$/, '');
-  }
-  return 'https://downlyfree.onrender.com';
-}
+// Production domain is hardcoded to prevent the sitemap from ever
+// outputting the Render internal URL (downlyfree.onrender.com) instead of
+// the canonical domain. A domain mismatch between sitemap and canonicals
+// causes Google to treat the URLs as unrelated and delays indexing.
+const BASE_URL = 'https://downlyfree.onrender.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = getBaseUrl();
+  const now = new Date();
 
   const routes: MetadataRoute.Sitemap = [
+    // Homepage — highest priority
     {
-      url: baseUrl,
-      lastModified: new Date(),
+      url: BASE_URL,
+      lastModified: now,
       changeFrequency: 'daily',
       priority: 1.0,
     },
+    // Guides index page
     {
-      url: `${baseUrl}/guides`,
-      lastModified: new Date(),
+      url: `${BASE_URL}/guides`,
+      lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
   ];
 
-  // Add all 9 SEO Landing Tools
+  // All SEO landing tool pages (9+ tools)
   Object.keys(SEO_TOOLS).forEach((slug) => {
     routes.push({
-      url: `${baseUrl}/${slug}`,
-      lastModified: new Date(),
+      url: `${BASE_URL}/${slug}`,
+      lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.9,
     });
   });
 
-  // Add all Educational Guides
+  // All educational guide articles
   Object.keys(GUIDES_DATA).forEach((slug) => {
     routes.push({
-      url: `${baseUrl}/guides/${slug}`,
-      lastModified: new Date(),
+      url: `${BASE_URL}/guides/${slug}`,
+      lastModified: now,
       changeFrequency: 'monthly',
       priority: 0.7,
     });

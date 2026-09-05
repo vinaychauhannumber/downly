@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { Zap, Sparkles } from 'lucide-react';
 import { YouTubeIcon, InstagramIcon } from './icons';

@@ -13,13 +13,13 @@ export const metadata: Metadata = {
   description:
     'Free step-by-step guides on downloading Instagram Reels, converting YouTube videos to MP3, downloading 1080p videos with audio, and saving Shorts on mobile.',
   alternates: {
-    canonical: 'https://downly.media/guides',
+    canonical: 'https://downlyfree.onrender.com/guides',
   },
   openGraph: {
     title: 'Video & Audio Download Guides & Tutorials | Downly',
     description:
       'Free step-by-step guides on downloading Instagram Reels, converting YouTube videos to MP3, and saving YouTube Shorts.',
-    url: 'https://downly.media/guides',
+    url: 'https://downlyfree.onrender.com/guides',
     siteName: 'Downly',
     type: 'website',
   },
@@ -37,7 +37,7 @@ export default function GuidesIndexPage() {
       <StructuredData
         appName="Downly Guides & Tutorials"
         appDescription="Step-by-step tutorials on video downloading and audio conversion."
-        appUrl="https://downly.media/guides"
+        appUrl="https://downlyfree.onrender.com/guides"
         breadcrumbs={breadcrumbs}
       />
 

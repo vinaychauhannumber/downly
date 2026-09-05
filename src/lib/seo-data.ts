@@ -903,4 +903,239 @@ export const SEO_TOOLS: Record<string, SeoToolData> = {
       'youtube-1080p-downloader',
     ],
   },
+  'instagram-reels-downloader': {
+    slug: 'instagram-reels-downloader',
+    title: 'Instagram Reels Downloader – Save Reels in HD MP4 (No Watermark)',
+    metaDescription:
+      'Download Instagram Reels in HD 1080p MP4 or extract MP3 audio. Free online Instagram Reels downloader — no watermark, no login, works on iPhone and Android.',
+    h1: 'Instagram Reels Downloader',
+    subtitle:
+      'Paste any public Instagram Reel link and instantly download it in original HD quality MP4 video or extract the audio as a high-quality MP3 file — no watermark, no login.',
+    badge: 'Instagram Reels HD',
+    presetPlatform: 'instagram',
+    defaultFormat: 'mp4',
+    defaultQuality: '1080p',
+    keywords: [
+      'Instagram Reels Downloader',
+      'Download Instagram Reels',
+      'Save Instagram Reels',
+      'Instagram Reels to MP4',
+      'Download Reels without Watermark',
+      'Free Instagram Reels Downloader',
+      'Instagram Reels MP3 Download',
+    ],
+    intro: {
+      heading: 'The Fastest Way to Save Instagram Reels in Original Quality',
+      paragraphs: [
+        "Instagram Reels are short-form, high-energy vertical videos that creators publish daily — from viral dance trends to cooking tutorials, travel clips, and brand campaigns. Downly\'s Instagram Reels Downloader lets you save any public Reel directly to your device in its original 1080p resolution without compression, overlays, or watermarks.",
+        "Simply paste the Reel URL, click Analyze, and receive a clean MP4 or MP3 file ready for offline playback, archiving, or editing on any device — iPhone, Android, Mac, Windows, or tablet. Unlike browser extensions that harvest your browsing data, Downly runs entirely through a secure cloud pipeline.",
+      ],
+    },
+    features: [
+      {
+        title: 'True 1080p HD Quality',
+        description:
+          "Downloads the highest available resolution from Instagram\'s CDN — preserving original clarity, color depth, and frame rate.",
+        icon: 'Video',
+      },
+      {
+        title: 'Absolutely No Watermarks',
+        description:
+          'Every video file is 100% clean. No Downly branding, no Instagram watermarks, and no promotional overlays added.',
+        icon: 'Sparkles',
+      },
+      {
+        title: 'Audio Extraction (MP3)',
+        description:
+          'Switch to MP3 mode to extract the trending soundtrack, voiceover, or background audio from any Reel at up to 320 kbps.',
+        icon: 'Music',
+      },
+      {
+        title: 'Works on All Devices',
+        description:
+          'Fully compatible with Safari on iPhone, Chrome on Android, and all major desktop browsers — no app install needed.',
+        icon: 'Smartphone',
+      },
+    ],
+    steps: [
+      {
+        title: '1. Find & Copy the Reel Link',
+        description:
+          'Open Instagram, tap the Share icon on any public Reel, and select "Copy Link" from the share sheet.',
+      },
+      {
+        title: '2. Paste into Downly & Analyze',
+        description:
+          'Paste the copied Reel URL into the input box above and press "Analyze". Downly fetches the video metadata in seconds.',
+      },
+      {
+        title: '3. Choose Format & Download',
+        description:
+          'Select MP4 (1080p or 720p) for video, or MP3 Audio for sound only. Click Download to save to your device.',
+      },
+    ],
+    formatSpecs: [
+      {
+        format: 'MP4 Video (1080p)',
+        resolutionOrBitrate: '1920 × 1080 (Full HD)',
+        compatibility: 'iPhone, Android, Mac, Windows, Smart TVs, VLC',
+        recommendedFor: 'Full-quality offline viewing and content archiving',
+      },
+      {
+        format: 'MP4 Video (720p)',
+        resolutionOrBitrate: '1280 × 720 (HD Ready)',
+        compatibility: 'All mobile and desktop browsers and media players',
+        recommendedFor: 'Faster downloads with sharp high-definition quality',
+      },
+      {
+        format: 'MP3 Audio (320 kbps)',
+        resolutionOrBitrate: '320 kbps CBR Stereo',
+        compatibility: 'Apple Music, Spotify local files, all audio players',
+        recommendedFor: 'Reel background music, voiceovers, and sound effects',
+      },
+    ],
+    faqs: [
+      {
+        question: 'How do I download Instagram Reels without a watermark?',
+        answer:
+          "Paste the Reel link into Downly and click Download. Downly processes the original media stream directly from Instagram\'s CDN, so the downloaded file contains no watermarks from Instagram or Downly.",
+      },
+      {
+        question: 'Can I download Reels on an iPhone without an app?',
+        answer:
+          'Yes! Open Safari, visit downlyfree.onrender.com, paste your Reel link, and tap Download. The video saves to your Files app and you can move it to your Photos library using Share > Save Video.',
+      },
+      {
+        question: 'Is there a limit on how many Reels I can download?',
+        answer:
+          'Downly has generous fair-use rate limits for personal use. There is no subscription required and no daily cap for standard personal media archiving.',
+      },
+      {
+        question: 'Can I download Reels from private Instagram accounts?',
+        answer:
+          "No. Downly strictly processes only publicly accessible Instagram Reels. Private account content cannot be accessed in compliance with Instagram\'s privacy policies.",
+      },
+    ],
+    relatedSlugs: [
+      'instagram-reel-downloader',
+      'instagram-video-downloader',
+      'instagram-photo-downloader',
+      'youtube-shorts-downloader',
+    ],
+  },
+
+  'instagram-photo-downloader': {
+    slug: 'instagram-photo-downloader',
+    title: 'Instagram Photo Downloader – Save Instagram Photos in Full HD',
+    metaDescription:
+      'Download Instagram photos and carousel images in full resolution. Free online Instagram photo saver — no login, no watermark, works on iPhone, Android, and PC.',
+    h1: 'Instagram Photo Downloader',
+    subtitle:
+      'Save public Instagram photos, carousel images, and gallery posts in their original full-resolution quality directly to your device.',
+    badge: 'Instagram Photos HD',
+    presetPlatform: 'instagram',
+    defaultFormat: 'mp4',
+    defaultQuality: '1080p',
+    keywords: [
+      'Instagram Photo Downloader',
+      'Download Instagram Photos',
+      'Save Instagram Images',
+      'Instagram Image Downloader',
+      'Instagram Picture Saver',
+      'Download Instagram Carousel',
+      'Save Instagram Posts',
+    ],
+    intro: {
+      heading: 'Save Full-Resolution Instagram Photos Instantly',
+      paragraphs: [
+        "Instagram compresses photos when viewed in a browser, making it difficult to save them in their original quality. Downly\'s Instagram Photo Downloader bypasses the web interface and fetches images directly from Instagram\'s content delivery network, giving you the highest available resolution for any public post.",
+        'Whether you want to save inspiring photography, product images, travel shots, or graphic designs for offline reference, Downly delivers clean image files with full color fidelity. Paste the Instagram post URL below and download any public photo or carousel gallery in seconds.',
+      ],
+    },
+    features: [
+      {
+        title: 'Original Resolution Quality',
+        description:
+          "Downloads images at the highest resolution available on Instagram\'s CDN — no re-compression or quality degradation.",
+        icon: 'Sparkles',
+      },
+      {
+        title: 'Carousel & Gallery Support',
+        description:
+          'Supports multi-image carousel posts so you can access all slides from a single Instagram gallery.',
+        icon: 'Video',
+      },
+      {
+        title: 'No Login or App Required',
+        description:
+          'Works entirely in your browser. No Instagram account, no browser extension, and no third-party app installation.',
+        icon: 'ShieldCheck',
+      },
+      {
+        title: 'Instant Cloud Processing',
+        description:
+          "Photos are fetched and delivered in milliseconds via Downly\'s high-speed media processing infrastructure.",
+        icon: 'Zap',
+      },
+    ],
+    steps: [
+      {
+        title: '1. Copy the Instagram Post Link',
+        description:
+          'On Instagram, tap the three dots on any public post and select "Copy Link", or copy the URL from your browser address bar.',
+      },
+      {
+        title: '2. Paste into Downly',
+        description:
+          'Paste the post URL into the input field above and click "Analyze" to fetch the available media.',
+      },
+      {
+        title: '3. Download the Photo',
+        description:
+          "Select your preferred format and click Download. The image saves directly to your device\'s downloads folder or photo gallery.",
+      },
+    ],
+    formatSpecs: [
+      {
+        format: 'Original HD Image',
+        resolutionOrBitrate: 'Up to 1080px width (native Instagram resolution)',
+        compatibility: 'All devices, photo apps, editing software',
+        recommendedFor: 'High-fidelity archiving and design reference',
+      },
+      {
+        format: 'Carousel Slides',
+        resolutionOrBitrate: 'Individual images at native resolution',
+        compatibility: 'Universal browser download',
+        recommendedFor: 'Saving all images from multi-post galleries',
+      },
+    ],
+    faqs: [
+      {
+        question: 'Can I download Instagram photos on my phone?',
+        answer:
+          'Yes! Downly works in Safari on iPhone and Chrome on Android. Paste the Instagram post link, tap Download, and the image saves to your Photos or Files app.',
+      },
+      {
+        question: 'Does downloading Instagram photos require an account?',
+        answer:
+          'No. Downly only needs the public URL of the Instagram post. No Instagram login, no Downly account, and no app installation is required.',
+      },
+      {
+        question: 'Can I download photos from private Instagram accounts?',
+        answer:
+          "No. Downly strictly complies with Instagram\'s privacy policies and only processes publicly accessible posts.",
+      },
+      {
+        question: 'What image quality will I receive?',
+        answer:
+          "Downly fetches photos at the highest resolution made available by Instagram\'s servers for public posts, typically up to 1080 pixels wide with full color depth.",
+      },
+    ],
+    relatedSlugs: [
+      'instagram-reel-downloader',
+      'instagram-reels-downloader',
+      'instagram-video-downloader',
+      'video-downloader',
+    ],
+  },
 };

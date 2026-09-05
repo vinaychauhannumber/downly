@@ -26,7 +26,7 @@ export async function generateMetadata({
     };
   }
 
-  const canonicalUrl = `https://downly.media/${tool.slug}`;
+  const canonicalUrl = `https://downlyfree.onrender.com/${tool.slug}`;
 
   return {
     title: `${tool.title} | Downly`,

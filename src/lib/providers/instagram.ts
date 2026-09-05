@@ -51,7 +51,7 @@ export class InstagramProvider implements IMediaProvider {
       const res = await fetch(oembedUrl, {
         signal: controller.signal,
         headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; Downly/1.0; +https://downly.media)',
+          'User-Agent': 'Mozilla/5.0 (compatible; Downly/1.0; +https://downlyfree.onrender.com)',
         },
       });
       clearTimeout(timeoutId);
