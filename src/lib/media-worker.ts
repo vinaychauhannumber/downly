@@ -173,54 +173,190 @@ async function processJob(jobId: string, url: string, format: MediaFormatType, q
 }
 
 // ─── yt-dlp Download Logic ────────────────────────────────────────────────────
-function downloadWithYtDlp(
+
+/**
+ * Resolves the path to YouTube/browser cookies if provided via environment or filesystem.
+ * Render/Railway users can supply `YTDLP_COOKIES` (raw text) or `YTDLP_COOKIES_BASE64`.
+ */
+function getCookiesPath(): string | null {
+  // 1. Explicit path in environment variable
+  if (process.env.COOKIES_PATH && fs.existsSync(process.env.COOKIES_PATH)) {
+    return process.env.COOKIES_PATH;
+  }
+
+  // 2. Base64-encoded cookies (preserves newlines cleanly across cloud config dashboards)
+  if (process.env.YTDLP_COOKIES_BASE64) {
+    try {
+      const decoded = Buffer.from(process.env.YTDLP_COOKIES_BASE64, 'base64').toString('utf-8');
+      const target = path.join(TEMP_DIR, 'cookies.txt');
+      fs.writeFileSync(target, decoded, 'utf-8');
+      return target;
+    } catch (e) {
+      console.error('[Worker] Failed to decode YTDLP_COOKIES_BASE64:', e);
+    }
+  }
+
+  // 3. Raw cookies string in environment variable
+  const rawCookies = process.env.YTDLP_COOKIES || process.env.YOUTUBE_COOKIES;
+  if (rawCookies && rawCookies.trim().length > 0) {
+    try {
+      const target = path.join(TEMP_DIR, 'cookies.txt');
+      fs.writeFileSync(target, rawCookies.trim(), 'utf-8');
+      return target;
+    } catch (e) {
+      console.error('[Worker] Failed to write YTDLP_COOKIES:', e);
+    }
+  }
+
+  // 4. Local cookies.txt in workspace root
+  const rootCookies = path.join(process.cwd(), 'cookies.txt');
+  if (fs.existsSync(rootCookies)) {
+    return rootCookies;
+  }
+
+  return null;
+}
+
+/**
+ * Builds optimized yt-dlp argument array.
+ * On datacenter/cloud IPs (Render, AWS, DigitalOcean), the default `web` client triggers
+ * YouTube's bot-detection ("Sign in to confirm you're not a bot").
+ * Using `tv,android,ios` player clients bypasses the web challenge without requiring browser JS.
+ */
+function buildYtDlpArgs(
   url: string,
   format: MediaFormatType,
   quality: string,
-  outputPath: string
-): Promise<void> {
-  return new Promise((resolve, reject) => {
-    let args: string[];
+  outputPath: string,
+  playerClients = 'tv,android,ios'
+): string[] {
+  const args: string[] = [
+    '--ffmpeg-location', FFMPEG_BIN,
+    '--no-playlist',
+    '--no-check-certificates',
+    '--socket-timeout', '30',
+    '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+  ];
 
-    if (format === 'mp3') {
-      // Extract audio and convert to MP3 at the selected bitrate
-      const bitrate = quality.replace('kbps', '');
-      args = [
-        '--ffmpeg-location', FFMPEG_BIN,
-        '-x',                             // extract audio
-        '--audio-format', 'mp3',
-        '--audio-quality', bitrate + 'K',
-        '--no-playlist',
-        '-o', outputPath,
-        url,
-      ];
+  // Pass cookies if configured
+  const cookiesPath = getCookiesPath();
+  if (cookiesPath) {
+    args.push('--cookies', cookiesPath);
+  }
+
+  // Pass proxy if configured
+  const proxy = process.env.YTDLP_PROXY || process.env.HTTP_PROXY || process.env.HTTPS_PROXY;
+  if (proxy) {
+    args.push('--proxy', proxy);
+  }
+
+  // Platform-specific extractor optimizations
+  const isYouTube = /youtu\.?be/i.test(url);
+  if (isYouTube) {
+    if (cookiesPath) {
+      // With authenticated cookies, include web along with mobile/tv clients
+      args.push('--extractor-args', 'youtube:player_client=tv,android,web,ios');
     } else {
-      // Download video + audio and merge into MP4
-      const heightLimit = quality.replace('p', '');
-      args = [
-        '--ffmpeg-location', FFMPEG_BIN,
-        '-f', `bestvideo[height<=${heightLimit}][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=${heightLimit}]+bestaudio/best[height<=${heightLimit}]/best`,
-        '--merge-output-format', 'mp4',
-        '--no-playlist',
-        '-o', outputPath,
-        url,
-      ];
+      // Without cookies on cloud datacenter IPs, web client triggers bot check.
+      // tv, android, and ios clients bypass the web bot check.
+      args.push('--extractor-args', `youtube:player_client=${playerClients}`);
     }
+  }
 
-    console.log(`[Worker] yt-dlp ${format} ${quality}:`, YTDLP_BIN, args.join(' '));
+  if (format === 'mp3') {
+    // Extract audio and convert to MP3 at the selected bitrate
+    const bitrate = quality.replace('kbps', '');
+    args.push(
+      '-x',
+      '--audio-format', 'mp3',
+      '--audio-quality', `${bitrate}K`,
+      '-o', outputPath,
+      url
+    );
+  } else {
+    // Download video + audio and merge into MP4
+    const heightLimit = quality.replace('p', '');
+    args.push(
+      '-f', `bestvideo[height<=${heightLimit}][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=${heightLimit}]+bestaudio/best[height<=${heightLimit}]/18/best`,
+      '--merge-output-format', 'mp4',
+      '-o', outputPath,
+      url
+    );
+  }
+
+  return args;
+}
+
+function executeYtDlp(args: string[]): Promise<void> {
+  return new Promise((resolve, reject) => {
+    console.log('[Worker] Executing yt-dlp:', YTDLP_BIN, args.join(' '));
 
     const proc = spawn(YTDLP_BIN, args, { shell: false });
     let stderr = '';
+
     proc.stdout?.on('data', (d) => process.stdout.write(d));
     proc.stderr?.on('data', (d) => {
       const line = d.toString();
       stderr += line;
       process.stderr.write(line);
     });
+
     proc.on('error', reject);
     proc.on('close', (code) => {
       if (code === 0) resolve();
       else reject(new Error(`yt-dlp exited ${code}: ${stderr.slice(-400)}`));
     });
   });
+}
+
+function sanitizeYtDlpError(err: unknown): Error {
+  const raw = err instanceof Error ? err.message : String(err);
+  if (raw.includes("Sign in to confirm you're not a bot") || raw.includes("cookies-from-browser")) {
+    return new Error(
+      "YouTube is requiring bot verification on this cloud server IP. " +
+      "To resolve permanently on Render, add your YouTube cookies.txt to the YTDLP_COOKIES environment variable in the Render Dashboard."
+    );
+  }
+  if (raw.includes("HTTP Error 429")) {
+    return new Error("YouTube has temporarily rate-limited this video. Please try again in 1-2 minutes.");
+  }
+  if (raw.includes("Video unavailable") || raw.includes("Private video")) {
+    return new Error("This video is unavailable or set to private.");
+  }
+  return new Error(raw.slice(-300));
+}
+
+async function downloadWithYtDlp(
+  url: string,
+  format: MediaFormatType,
+  quality: string,
+  outputPath: string
+): Promise<void> {
+  const isYouTube = /youtu\.?be/i.test(url);
+  const primaryArgs = buildYtDlpArgs(url, format, quality, outputPath, 'tv,android,ios');
+
+  try {
+    await executeYtDlp(primaryArgs);
+  } catch (err) {
+    const errMsg = String(err);
+    const isBotBlock =
+      errMsg.includes("Sign in to confirm you're not a bot") ||
+      errMsg.includes('cookies-from-browser') ||
+      errMsg.includes('HTTP Error 429');
+
+    // Auto-retry once with strict TV client if primary client combination was challenged
+    if (isYouTube && isBotBlock) {
+      console.warn('[Worker] Bot verification triggered on primary client. Retrying with fallback TV client...');
+      const fallbackArgs = buildYtDlpArgs(url, format, quality, outputPath, 'tv,android');
+      try {
+        await executeYtDlp(fallbackArgs);
+        return;
+      } catch (retryErr) {
+        console.error('[Worker] Fallback client attempt also failed:', retryErr);
+        throw sanitizeYtDlpError(retryErr);
+      }
+    }
+
+    throw sanitizeYtDlpError(err);
+  }
 }

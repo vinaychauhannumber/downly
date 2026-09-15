@@ -9,8 +9,17 @@ mkdir -p bin
 mkdir -p .tmp_downloads
 
 # Download yt-dlp standalone binary into local bin folder
-echo "==> Downloading yt-dlp binary..."
-curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o ./bin/yt-dlp
+OS="$(uname -s)"
+echo "==> Detected OS: $OS"
+
+if [ "$OS" = "Linux" ]; then
+  echo "==> Downloading yt-dlp_linux for Linux..."
+  curl -sSL https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux -o ./bin/yt-dlp || curl -sSL https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o ./bin/yt-dlp
+else
+  echo "==> Downloading yt-dlp..."
+  curl -sSL https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o ./bin/yt-dlp
+fi
+
 chmod +x ./bin/yt-dlp
 
 # Verify yt-dlp
