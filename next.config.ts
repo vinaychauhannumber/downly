@@ -12,15 +12,27 @@ const nextConfig: NextConfig = {
     ],
   },
   async rewrites() {
-    const backendUrl = process.env.BACKEND_API_URL || process.env.NEXT_PUBLIC_BACKEND_API_URL;
+    const backendUrl =
+      process.env.BACKEND_API_URL ||
+      process.env.NEXT_PUBLIC_BACKEND_API_URL ||
+      (process.env.VERCEL ? 'https://downlyfree.onrender.com' : undefined);
+
     if (backendUrl) {
       const cleanUrl = backendUrl.replace(/\/$/, '');
-      return [
-        {
-          source: '/api/download/:path*',
-          destination: `${cleanUrl}/api/download/:path*`,
-        },
-      ];
+      return {
+        beforeFiles: [
+          {
+            source: '/api/download',
+            destination: `${cleanUrl}/api/download`,
+          },
+          {
+            source: '/api/download/:path*',
+            destination: `${cleanUrl}/api/download/:path*`,
+          },
+        ],
+        afterFiles: [],
+        fallback: [],
+      };
     }
     return [];
   },
