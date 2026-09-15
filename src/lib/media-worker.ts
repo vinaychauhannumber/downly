@@ -7,7 +7,12 @@ import { getProviderForUrl } from './providers';
 import { formatFileSize } from './utils';
 
 // ─── Paths ────────────────────────────────────────────────────────────────────
-const TEMP_DIR = path.join(process.cwd(), '.tmp_downloads');
+// ─── Paths ────────────────────────────────────────────────────────────────────
+const TEMP_DIR =
+  process.env.TEMP_DIR ||
+  (process.env.VERCEL
+    ? path.join('/tmp', '.tmp_downloads')
+    : path.join(process.cwd(), '.tmp_downloads'));
 const FFMPEG_BIN = locateFFmpeg();
 const YTDLP_BIN = locateYtDlp();
 
@@ -16,7 +21,7 @@ if (!fs.existsSync(TEMP_DIR)) {
 }
 
 function locateFFmpeg(): string {
-  // Allow explicit override via environment variable (useful for Render/Railway)
+  // Allow explicit override via environment variable (useful for Render/Railway/Vercel)
   if (process.env.FFMPEG_PATH) return process.env.FFMPEG_PATH;
   const candidates = [
     '/usr/bin/ffmpeg',                  // Render / Ubuntu Linux
@@ -34,10 +39,12 @@ function locateFFmpeg(): string {
 }
 
 function locateYtDlp(): string {
-  // Allow explicit override via environment variable (useful for Render/Railway)
+  // Allow explicit override via environment variable (useful for Render/Railway/Vercel)
   if (process.env.YTDLP_PATH) return process.env.YTDLP_PATH;
   const candidates = [
     path.join(process.cwd(), 'bin/yt-dlp'), // Render project bin (build.sh)
+    '/tmp/bin/yt-dlp',                     // Vercel serverless bin
+    '/tmp/yt-dlp',
     '/usr/local/bin/yt-dlp',
     '/usr/bin/yt-dlp',
     '/opt/homebrew/bin/yt-dlp',

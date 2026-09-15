@@ -1,8 +1,7 @@
 import { MetadataRoute } from 'next';
+import { SITE_URL } from '@/lib/site-config';
 
-// Production domain hardcoded — same reason as sitemap.ts.
-// Prevents env var fallback to downlyfree.onrender.com.
-const BASE_URL = 'https://downlyfree.onrender.com';
+const BASE_URL = SITE_URL;
 
 export default function robots(): MetadataRoute.Robots {
   return {

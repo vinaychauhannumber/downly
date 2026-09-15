@@ -11,6 +11,19 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: '*.fbcdn.net' },
     ],
   },
+  async rewrites() {
+    const backendUrl = process.env.BACKEND_API_URL || process.env.NEXT_PUBLIC_BACKEND_API_URL;
+    if (backendUrl) {
+      const cleanUrl = backendUrl.replace(/\/$/, '');
+      return [
+        {
+          source: '/api/download/:path*',
+          destination: `${cleanUrl}/api/download/:path*`,
+        },
+      ];
+    }
+    return [];
+  },
   async headers() {
     return [
       {

@@ -2,11 +2,10 @@ import { MetadataRoute } from 'next';
 import { SEO_TOOLS } from '@/lib/seo-data';
 import { GUIDES_DATA } from '@/lib/guides-data';
 
-// Production domain is hardcoded to prevent the sitemap from ever
-// outputting the Render internal URL (downlyfree.onrender.com) instead of
-// the canonical domain. A domain mismatch between sitemap and canonicals
-// causes Google to treat the URLs as unrelated and delays indexing.
-const BASE_URL = 'https://downlyfree.onrender.com';
+import { SITE_URL } from '@/lib/site-config';
+
+// Dynamic domain resolution supports Vercel, Render, or custom domains.
+const BASE_URL = SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
